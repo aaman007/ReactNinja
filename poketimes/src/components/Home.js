@@ -1,12 +1,46 @@
-import React from 'react';
+import React, {Component} from 'react';
+import axios from 'axios';
+import {Link} from 'react-router-dom';
+import Pokeball from '../pokeball.png';
 
-const Home = () => {
-    return (
-        <div className="container">
-            <h1 className="center">Home</h1>
-            <p>"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?"</p>
-        </div>
-    )
+class Home extends Component {
+    state = {
+        posts: []
+    }
+
+    componentDidMount(){
+        axios.get('https://jsonplaceholder.typicode.com/posts')
+            .then(res => {
+                this.setState({
+                    posts: res.data.slice(0,10)
+                })
+            })
+    }
+    render(){
+        const { posts } = this.state;
+        const postList = posts.length ? (
+            posts.map(post => {
+                return (
+                    <div className="post card" key={post.id}>
+                        <div className="card-content">
+                            <img src={Pokeball}></img>
+                            <Link to={`/${post.id}`}>
+                                <span className="card-title red-text"> {post.title} </span>
+                            </Link>
+                            <p> {post.body} </p>
+                        </div>
+                    </div>
+                )
+            })
+        ) : ( <div className="center"> No posts yet!! </div> );
+
+         return (
+            <div className="container home">
+                <h1 className="center">Posts</h1>
+                { postList }
+            </div>
+        )
+    }
 }
 
 export default Home;

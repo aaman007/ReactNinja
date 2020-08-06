@@ -12,7 +12,21 @@ code {
     monospace;
 }
 
-.active{
+.nav-wrapper .nav-links .active{
   background-color: rgb(231, 144, 14);
-  color: black;
+  color: white;
+}
+.nav-wrapper .nav-links a:hover{
+  background-color: orangered;
+}
+
+.home .post img{
+  position: absolute;
+  top: 10px;
+  left: -100px;
+  opacity: 0.6;
+}
+.home .post{
+  overflow: hidden;
+  padding-left: 110px;
 }
